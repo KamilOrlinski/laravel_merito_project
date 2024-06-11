@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->enum('role', ['admin', 'mod', 'user'])->default('user');
+            $table->decimal(('balance'))->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

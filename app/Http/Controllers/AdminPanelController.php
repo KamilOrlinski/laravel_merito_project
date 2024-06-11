@@ -10,4 +10,9 @@ class AdminPanelController extends Controller
     {
         return view('admin.adminDashboard');
     }
+
+    // public function navAdminDash()
+    // {
+    //     return view('admin.adminDashboard');
+    // }
 }
