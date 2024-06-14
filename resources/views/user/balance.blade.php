@@ -1,6 +1,6 @@
 <!-- resources/views/home.blade.php -->
 
-<x-dashboard :balance="$balance">
+<x-dashboard :balance="$balance" :accountNumber="$accountNumber">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">

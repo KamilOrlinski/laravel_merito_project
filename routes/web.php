@@ -30,9 +30,15 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+//Ścieżki dostepu do ról
+
 Route::middleware(['auth','role:admin'])->group(function() {
     Route::get('/admin/dashboard', [AdminPanelController::class, 'adminDashboard'])->name('admin.dashboard');
 });
 
 
 Route::get('/mod/dashboard', [ModeratorPanelController::class, 'moderatorDashboard'])->name('mod.dashboard');
+
+//Ścieżki do przelewwów
+
+Route::post('/transfer', [UserPanelController::class, 'transfer'])->name('transfer');

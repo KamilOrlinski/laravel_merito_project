@@ -18,10 +18,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('phone')->nullable();
+            $table->string('phone')->nullable()->unique();
             $table->text('address')->nullable();
             $table->enum('role', ['admin', 'mod', 'user'])->default('user');
             $table->decimal(('balance'))->default(0);
+            $table->string('accountNumber', 26)->nullable()->unique();
             $table->rememberToken();
             $table->timestamps();
         });
