@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\User;
+use App\Models\User;
 
 class UserPanelController extends Controller
 {
@@ -12,37 +12,54 @@ class UserPanelController extends Controller
     {
         $user = Auth::user();
 
+        if(!$user)
+        {
+            return redirect()->back()->with('error', 'Nie znaleziono zalogowanego użytkownika');
+        }
+
         $balance = $user->balance;
         $accountNumber = $user->accountNumber;
 
         return view('user.balance', ['balance' => $balance, 'accountNumber' => $accountNumber]);
     }
 
-//     public function transfer(Request $request)
-// {
-//     $user = Auth::user();
+    public function transfer(Request $request)
+{
+    $user = Auth::user();
 
-//     $receiver = User::where('accountNumber', $_POST['bank_account_number']);
+    $request->validate([
+        'bank_account_number' => ['required', 'string', 'size:26'],
+        'amount' => ['required', 'numeric', 'min:0'],
+    ]);
 
-//     $request->validate([
-//         'bank_account_number' => ['required', 'string', 'size:26'],
-//         'amount' => ['required', 'numeric', 'min:0'],
-//     ]);
+    if(empty($request->bank_account_number))
+    {
+        return redirect()->back()->with('error', 'Proszę podać numer konta odbiorcy');
+    }
 
-//     // Sprawdź czy użytkownik ma wystarczającą ilość środków na koncie
-//     if ($user->balance >= $request->amount) {
-//         // Wykonaj przelew
-//         // Zaktualizuj saldo konta użytkownika
-//         $user->balance - $request->amount;
-//         // Zaktualizuj saldo konta odbiorcy
+    $receiver = User::where('accountNumber', $request->bank_account_number)->first();
+
+    if(!$receiver)
+    {
+        return redirect()->back()->with('error', 'Odbiorca o podanym numerze konta nie istnieje');
+    }
+
+    if ($user->balance >= $request->amount) 
+    {
+        $user->balance -= $request->amount;
+        /** @var \App\Models\User $user **/
+        $user->save();
 
 
-//         // Poinformuj użytkownika o sukcesie przelewu
-//         return redirect()->back()->with('success', 'Przelew został wykonany pomyślnie.');
-//     } else {
-//         // Poinformuj użytkownika o braku wystarczających środków
-//         return redirect()->back()->with('error', 'Brak wystarczających środków na koncie.');
-//     }
-// }
+        $receiver->balance += $request->amount;
+        $receiver->save();
+
+        return redirect()->back()->with('success', 'Przelew został wykonany pomyślnie.');
+    }
+    else 
+    {
+        return redirect()->back()->with('error', 'Brak wystarczających środków na koncie.');
+    }
+}
 
 }

@@ -9,6 +9,29 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+
+                    @if (session('success'))
+                    <div class="successedAlert" style="color:greenyellow">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+
+                    @if (session('error'))
+                    <div class="errorAlert" style="color: red">
+                        {{ session('error') }}
+                    </div>
+                    @endif
+                    
+                    @if ($errors->any())
+                    <div class="errorAlert" style="color: red">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
                     <div>
                         <div class="container">
                             <div class="row justify-content-center">
@@ -24,11 +47,10 @@
                                         <input type="text" id="bank_account_number" name="bank_account_number" style="color: blue; width: 260px;">
                                         <br>
                                         <label for="amount">Kwota przelewu:</label>
-                                        <input type="number" id="amount" name="amount" style="color :blue">
+                                        <input type="decimal" id="amount" name="amount" style="color :blue">
                                         <br>
                                         <button type="submit" style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; border-radius: 5px;">Wyślij przelew</button>
                                     </form>
-                                    
                                 </div>
                             </div>
                         </div>
