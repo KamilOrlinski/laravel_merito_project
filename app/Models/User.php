@@ -41,4 +41,14 @@ class User extends Authenticatable
             'balance' => 'decimal:2',
         ];
     }
+
+    public function sentTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'sender', 'accountNumber');
+    }
+
+    public function receivedTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'receiver', 'accountNumber');
+    }
 }

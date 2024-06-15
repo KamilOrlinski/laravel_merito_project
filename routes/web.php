@@ -4,7 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminPanelController;
 use App\Http\Controllers\ModeratorPanelController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserPanelController;
+use App\Models\Transaction;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +21,12 @@ Route::get('/admin/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('admin_dashboard');
 
 Route::get('/balance', [UserPanelController::class, 'userBalance'])->name('userBalance');
+
+Route::get('/admin/balance', [AdminPanelController::class, 'adminBalance'])->name('adminBalance');
+
+Route::get('/admin/history', [TransactionController::class, 'transactionHistory'])->name('adminHistory');
+
+Route::get('/admin/about', [AdminPanelController::class, 'adminAbout'])->name('adminAbout');
 
 Route::get('/admin/dashboard', [AdminPanelController::class, 'adminDashboard'])->name('nav_admin_dashboard');
 

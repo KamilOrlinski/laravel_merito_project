@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
+use App\Models\Transaction;
 
 class UserPanelController extends Controller
 {
@@ -53,6 +55,28 @@ class UserPanelController extends Controller
 
         $receiver->balance += $request->amount;
         $receiver->save();
+
+        try {
+            $transaction = new Transaction();
+            $transaction->amount = $request->amount;
+            $transaction->sender = $user->accountNumber;
+            $transaction->receiver = $receiver->accountNumber;
+
+            // Log before saving
+            Log::info('Saving transaction:', [
+                'amount' => $transaction->amount,
+                'sender' => $transaction->sender,
+                'receiver' => $transaction->receiver
+            ]);
+
+            $transaction->save();
+
+            // Log after saving
+            Log::info('Transaction saved successfully');
+        } catch (\Exception $e) {
+            Log::error('Błąd podczas zapisywania transakcji: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Wystąpił błąd podczas zapisywania transakcji.');
+        }
 
         return redirect()->back()->with('success', 'Przelew został wykonany pomyślnie.');
     }

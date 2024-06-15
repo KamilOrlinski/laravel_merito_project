@@ -1,0 +1,18 @@
+h1 {
+    background: linear-gradient(to right, #ff1f35 0, #fa54ff 100%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    font-size: 28px;
+}
+
+#title {
+    font-size: 24px;
+}
+
+#sent {
+    color: red;
+}
+
+#received {
+    color: greenyellow;
+}

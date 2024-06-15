@@ -6,19 +6,25 @@
                 @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/js/app.js'])
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <h1>IT Bank</h1>
+                    <a href="{{ route('admin.dashboard') }}">
+                        <h1 id="welcome">IT Bank Admin</h1>
                         {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" /> --}}
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Strona głowna') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('userBalance')" :active="request()->routeIs('userBalance')">
+                    <x-nav-link :href="route('adminBalance')" :active="request()->routeIs('adminBalance')">
                         {{ __('Przelew') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('adminHistory')" :active="request()->routeIs('adminHistory')">
+                        {{ __('Historia') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('adminAbout')" :active="request()->routeIs('adminAbout')">
+                        {{ __('O nas') }}
                     </x-nav-link>
                 </div>
             </div>

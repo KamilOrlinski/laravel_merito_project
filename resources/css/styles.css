@@ -1,0 +1,51 @@
+.successedAlert {
+    color: greenyellow;
+}
+
+.errorAlert {
+    color: red;
+}
+
+/* Dodatkowe style dla formularza */
+form {
+    text-align: center;
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+    color: white;
+}
+
+form input[type="text"],
+form input[type="decimal"] {
+    width: 260px;
+    padding: 8px;
+    color: blue;
+}
+
+form button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#bank_account_number {
+    margin: 10px;
+}
+
+#amount {
+    margin: 10px;
+}
+
+#transferInfo {
+    background-color: rgb(49, 54, 75);
+    text-align: center;
+}
+
+#alert {
+    text-align: center;
+}
