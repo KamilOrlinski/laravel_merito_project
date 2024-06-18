@@ -15,7 +15,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                        {{ __('Strona głowna') }}
+                        {{ __('Panel administratora') }}
                     </x-nav-link>
                     <x-nav-link :href="route('adminBalance')" :active="request()->routeIs('adminBalance')">
                         {{ __('Przelew') }}
@@ -78,8 +78,17 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('dashboard')">
+                {{ __('Panel administratora') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('adminBalance')" :active="request()->routeIs('adminBalance')">
+                {{ __('Przelew') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('adminHistory')" :active="request()->routeIs('adminHistory')">
+                {{ __('Historia') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('adminAbout')" :active="request()->routeIs('adminAbout')">
+                {{ __('O nas') }}
             </x-responsive-nav-link>
         </div>
 

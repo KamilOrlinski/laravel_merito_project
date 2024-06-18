@@ -25,6 +25,11 @@ class UserPanelController extends Controller
         return view('user.balance', ['balance' => $balance, 'accountNumber' => $accountNumber]);
     }
 
+    public function userAbout() 
+    {
+        return view('user.about');
+    }
+
     public function transfer(Request $request)
 {
     $user = Auth::user();

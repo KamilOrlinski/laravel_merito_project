@@ -12,7 +12,9 @@ class AdminPanelController extends Controller
 {
     public function adminDashboard()
     {
-        return view('admin.adminDashboard');
+        $users = User::all();
+        return view('admin.adminDashboard', ['users' => $users]);
+        // return view('admin.adminDashboard');
     }
 
     public function adminAbout() 
@@ -47,7 +49,7 @@ class AdminPanelController extends Controller
         Log::info('Transfer method called');
     
         $request->validate([
-            'bank_account_number' => ['required', 'string', 'size:26'],
+            'bank_account_number' => ['required', 'numeric', 'size:26'],
             'amount' => ['required', 'numeric', 'min:0'],
         ]);
     
@@ -100,5 +102,33 @@ class AdminPanelController extends Controller
         {
             return redirect()->back()->with('error', 'Brak wystarczających środków na koncie.');
         }
+    }
+
+    public function userList()
+    {
+        $users = User::all();
+        return view('admin.userList', ['users' => $users]);
+    }
+
+    public function editUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return redirect()->route('admin.userList')->with('success', 'Użytkownik zaktualizowany pomyślnie');
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Dane użytkownika zostały zaktualizowane pomyślnie');
     }
 }

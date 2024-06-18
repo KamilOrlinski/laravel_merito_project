@@ -23,12 +23,6 @@
                                     {{ __('Email') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
-                                    {{ __('Nr telefonu') }}
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
-                                    {{ __('Rola') }}
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
                                     {{ __('Akcje') }}
                                 </th>
                             </tr>
@@ -39,8 +33,6 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-200">{{ $user->id }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ $user->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ $user->email }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ $user->phone }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ $user->role }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <button onclick="showEditForm({{ $user->id }})" class="text-indigo-600 dark:text-indigo-300 hover:text-indigo-900">{{ __('Edytuj') }}</button>
                                     </td>
@@ -56,26 +48,11 @@
                                             </div>
                                             <div class="mb-4">
                                                 <label for="email-{{ $user->id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Email') }}</label>
-                                                <input type="email" name="email" id="email-{{ $user->id }}" value="{{ $user->email }}" class="mt-1 block w-full text-black">
-                                            </div>                                            <div class="mb-4">
-                                                <label for="phone-{{ $user->id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Nr telefonu') }}</label>
-                                                <input type="phone" name="phone" id="phone-{{ $user->id }}" value="{{ $user->phone }}" class="mt-1 block w-full text-black">
+                                                <input type="email" name="email" id="email-{{ $user->id }}" value="{{ $user->email }}" class="mt-1 block w-full">
                                             </div>
-                                            <div class="mb-4">
-                                                <label for="role-{{ $user->id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Rola') }}</label>
-                                                <select name="role" id="role-{{ $user->id }}" class="mt-1 block w-full text-black">
-                                                    <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                                                    <option value="mod" {{ $user->role == 'mod' ? 'selected' : '' }}>Mod</option>
-                                                    <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
-                                                </select>
-                                            </div>
-                                        {{-- </div>                                            <div class="mb-4">
-                                            <label for="role-{{ $user->id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Nr telefonu') }}</label>
-                                            <input type="text" name="role" id="role-{{ $user->id }}" value="{{ $user->role }}" class="mt-1 block w-full text-black">
-                                        </div> --}}
                                             <div class="flex justify-end">
-                                                <button type="button" onclick="hideEditForm({{ $user->id }})" class="mr-2 inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-black uppercase tracking-widest hover:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-300 active:bg-red-600 disabled:opacity-25 transition">{{ __('Anuluj') }}</button>
-                                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-black uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-300 active:bg-blue-600 disabled:opacity-25 transition">{{ __('Zapisz') }}</button>
+                                                <button type="button" onclick="hideEditForm({{ $user->id }})" class="mr-2 inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-300 active:bg-red-600 disabled:opacity-25 transition">{{ __('Anuluj') }}</button>
+                                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-300 active:bg-blue-600 disabled:opacity-25 transition">{{ __('Zapisz') }}</button>
                                             </div>
                                         </form>
                                     </td>

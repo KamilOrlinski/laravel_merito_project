@@ -21,4 +21,18 @@ class TransactionController extends Controller
             'sentTransactions' => $sentTransactions,
         ]);
     }
+
+    public function userTransactionHistory()
+    {
+        /** @var \App\Models\User $user **/
+        $user = Auth::user();
+    
+        $receivedTransactions = $user->receivedTransactions()->latest()->get();
+        $sentTransactions = $user->sentTransactions()->latest()->get();
+    
+        return view('user.history', [
+            'receivedTransactions' => $receivedTransactions,
+            'sentTransactions' => $sentTransactions,
+        ]);
+    }
 }
