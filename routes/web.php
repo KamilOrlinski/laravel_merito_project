@@ -64,3 +64,4 @@ Route::get('/history', [TransactionController::class, 'userTransactionHistory'])
 Route::get('/about', [UserPanelController::class, 'userAbout'])->name('userAbout');
 
 Route::delete('/admin/user/{id}', [AdminPanelController::class, 'deleteUser'])->name('admin.deleteUser');
+

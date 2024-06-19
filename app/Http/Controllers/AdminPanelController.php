@@ -180,5 +180,17 @@ class AdminPanelController extends Controller
     
         return $accountNumber;
     }
+
+    public function deleteUser($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            
+            return response()->json(['message' => 'Użytkownik został pomyślnie usunięty.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Wystąpił problem podczas usuwania użytkownika.', 'error' => $e->getMessage()], 500);
+        }
+    }
     
 }

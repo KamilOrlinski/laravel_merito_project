@@ -6,6 +6,8 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
+import $ from 'jquery';
+window.$ = window.jQuery = $;
 
 function showEditForm(userId) {
     document.getElementById('edit-form-' + userId).classList.remove('hidden');
@@ -17,20 +19,22 @@ function hideEditForm(userId) {
 
 function deleteUser(userId) {
     if (confirm('Czy na pewno chcesz usunąć tego użytkownika?')) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         $.ajax({
             url: `/admin/user/${userId}`,
             type: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Ustawienie tokena CSRF
-            },
+            dataType: 'json',
             success: function(data) {
-                // Obsługa sukcesu, np. aktualizacja interfejsu użytkownika
                 alert('Użytkownik został pomyślnie usunięty.');
-                // Tutaj możesz na przykład odświeżyć listę użytkowników lub zaktualizować widok
-                window.location.reload(); // Odświeża stronę po usunięciu użytkownika
+                window.location.reload();
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('Błąd:', textStatus, errorThrown);
+            error: function(error) {
+                console.error('Błąd:', error);
                 alert('Wystąpił problem podczas usuwania użytkownika.');
             }
         });
