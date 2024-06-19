@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AdminPanelController extends Controller
 {
@@ -22,10 +26,10 @@ class AdminPanelController extends Controller
         return view('admin.adminAbout');
     }
 
-    // public function navAdminDash()
-    // {
-    //     return view('admin.adminDashboard');
-    // }
+    public function adminAddUser()
+    {
+        return view('admin.adminAddUser');
+    }
 
     public function adminBalance() 
     {
@@ -131,4 +135,50 @@ class AdminPanelController extends Controller
 
         return redirect()->route('admin.dashboard')->with('success', 'Dane użytkownika zostały zaktualizowane pomyślnie');
     }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string', 'max:15'],
+            'address' => ['required', 'string', 'max:255'],
+            'role' => ['required', 'string', 'in:admin,mod,user'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('adminAddUser')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $accountNumber=$this->genAccountNumber();
+
+        $user = User::create([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'role' => $request->role,
+            'password' => Hash::make($request->password),
+            'accountNumber' => $this->genAccountNumber(),
+        ]);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Użytkownik utworzony pomyślnie.');
+    }
+
+    private function genAccountNumber()
+    {
+        do {
+            $accountNum1 = mt_rand(1000000000000, 9999999999999);
+            $accountNum2 = mt_rand(1000000000000, 9999999999999);
+            $accountNumber = $accountNum1 . $accountNum2;
+        } while (User::where('accountNumber', $accountNumber)->exists());
+    
+        return $accountNumber;
+    }
+    
 }

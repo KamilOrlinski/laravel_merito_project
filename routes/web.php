@@ -28,11 +28,9 @@ Route::get('/admin/history', [TransactionController::class, 'transactionHistory'
 
 Route::get('/admin/about', [AdminPanelController::class, 'adminAbout'])->name('adminAbout');
 
-// Route::get('/admin/users', [AdminPanelController::class, 'userList'])->name('admin.userList');
-// Route::get('/admin/users/{id}/edit', [AdminPanelController::class, 'editUser'])->name('admin.editUser');
-// Route::post('/admin/users/{id}', [AdminPanelController::class, 'updateUser'])->name('admin.updateUser');
-// Route::get('/admin/editUser/{id}', [AdminPanelController::class, 'editUser'])->name('admin.editUser');
-// Route::put('/admin/updateUser/{id}', [AdminPanelController::class, 'updateUser'])->name('admin.updateUser');
+Route::get('/admin/dashboard/adduser', [AdminPanelController::class, 'adminAddUser'])->name('adminAddUser');
+
+Route::post('/admin/dashboard', [AdminPanelController::class, 'store'])->name('adminRegister');
 
 Route::get('/admin/users', [AdminPanelController::class, 'userList'])->name('admin.userList');
 Route::get('/admin/users/{id}/edit', [AdminPanelController::class, 'editUser'])->name('admin.editUser');
@@ -64,3 +62,5 @@ Route::post('/transfer', [UserPanelController::class, 'transfer'])->name('transf
 Route::get('/history', [TransactionController::class, 'userTransactionHistory'])->name('userHistory');
 
 Route::get('/about', [UserPanelController::class, 'userAbout'])->name('userAbout');
+
+Route::delete('/admin/user/{id}', [AdminPanelController::class, 'deleteUser'])->name('admin.deleteUser');

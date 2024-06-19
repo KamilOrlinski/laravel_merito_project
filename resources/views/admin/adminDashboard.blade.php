@@ -5,6 +5,9 @@
         </h2>
     </x-slot>
 
+    <head>
+        @vite(['resources/css/app.css', 'resources/css/dashboard.css', 'resources/js/app.js'])
+    </head>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -29,7 +32,10 @@
                                     {{ __('Rola') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
-                                    {{ __('Akcje') }}
+                                    {{ __('Edycja') }}
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
+                                    {{ __('Usuwanie') }}
                                 </th>
                             </tr>
                         </thead>
@@ -43,6 +49,9 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ $user->role }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <button onclick="showEditForm({{ $user->id }})" class="text-indigo-600 dark:text-indigo-300 hover:text-indigo-900">{{ __('Edytuj') }}</button>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button onclick="deleteUser({{ $user->id }})" class="text-red-600 dark:text-red-600 hover:text-red-900">{{ __('Usuń') }}</button>
                                     </td>
                                 </tr>
                                 <tr id="edit-form-{{ $user->id }}" class="hidden">
@@ -69,10 +78,6 @@
                                                     <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
                                                 </select>
                                             </div>
-                                        {{-- </div>                                            <div class="mb-4">
-                                            <label for="role-{{ $user->id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('Nr telefonu') }}</label>
-                                            <input type="text" name="role" id="role-{{ $user->id }}" value="{{ $user->role }}" class="mt-1 block w-full text-black">
-                                        </div> --}}
                                             <div class="flex justify-end">
                                                 <button type="button" onclick="hideEditForm({{ $user->id }})" class="mr-2 inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-black uppercase tracking-widest hover:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-300 active:bg-red-600 disabled:opacity-25 transition">{{ __('Anuluj') }}</button>
                                                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-black uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-300 active:bg-blue-600 disabled:opacity-25 transition">{{ __('Zapisz') }}</button>
@@ -83,18 +88,11 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="mt-4">
+                        <a href="{{ route('adminAddUser') }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-black uppercase tracking-widest hover:bg-green-700 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-300 active:bg-green-600 disabled:opacity-25 transition">{{ __('Dodaj użytkownika') }}</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        function showEditForm(userId) {
-            document.getElementById('edit-form-' + userId).classList.remove('hidden');
-        }
-
-        function hideEditForm(userId) {
-            document.getElementById('edit-form-' + userId).classList.add('hidden');
-        }
-    </script>
 </x-adminApp-layout>
